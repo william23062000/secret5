@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>¿Quieres ser mi novia?</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin-top: 100px;
+      background-color: #fff0f5;
+      overflow: hidden;
+    }
+
+    h1 {
+      font-size: 2em;
+    }
+
+    button {
+      padding: 20px 40px;
+      font-size: 1.2em;
+      margin: 20px;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    #message {
+      margin-top: 50px;
+      font-size: 1.5em;
+      color: #d63384;
+      display: none;
+    }
+
+    #noMessages {
+      margin-top: 20px;
+      font-size: 1.2em;
+      color: #f46d75;
+    }
+
+    .heart {
+      position: absolute;
+      animation: float 6s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0); }
+      50% { transform: translateY(-30px); }
+      100% { transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+  <h1>¿Quieres ser mi novia?</h1>
+  <div>
+    <button id="yesBtn">Sí</button>
+    <button id="noBtn">No</button>
+  </div>
+  <div id="noMessages"></div>
+  <div id="message">Sabía que así iba a ser tu respuesta. ¡Te amo mucho! ❤️</div>
+
+  <!-- Música de fondo -->
+  <audio id="bgMusic" autoplay loop>
+    <source src="https://docs.google.com/uc?export=download&id=1hRT8st4N_BukHvvdDH-PvMzLCbVOU0Lw" type="audio/mpeg">
+    Tu navegador no soporta el elemento audio.
+  </audio>
+
+  <script>
+    const yesBtn = document.getElementById('yesBtn');
+    const noBtn = document.getElementById('noBtn');
+    const message = document.getElementById('message');
+    const noMessages = document.getElementById('noMessages');
+    const audio = document.getElementById('bgMusic');
+
+    const frasesNo = [
+      "¿Por qué no? 😢",
+      "Estás segura de eso...?",
+      "Piensa bien tu respuesta 🥺",
+      "No me rompas el corazón 💔",
+      "¡Pero si somos el uno para el otro!",
+      "Dímelo en broma, por favor...",
+      "Hasta Stitch está triste 🐾"
+    ];
+
+    function lanzarCorazones() {
+      for (let i = 0; i < 30; i++) {
+        const heart = document.createElement('div');
+        heart.classList.add('heart');
+        heart.innerHTML = '💖';
+
+        const size = Math.random() * 40 + 10;
+        heart.style.left = Math.random() * 100 + "vw";
+        heart.style.fontSize = size + "px";
+        heart.style.color = ["#ffb6c1", "#dda0dd", "#ff69b4", "#e6a8d7", "#c71585"][Math.floor(Math.random() * 5)];
+
+        document.body.appendChild(heart);
+
+        setTimeout(() => heart.remove(), 6000);
+      }
+    }
+
+    noBtn.addEventListener('click', () => {
+      let currentFontSize = parseFloat(window.getComputedStyle(noBtn).fontSize);
+      noBtn.style.fontSize = Math.max(10, currentFontSize - 4) + "px";
+
+      let yesSize = parseFloat(window.getComputedStyle(yesBtn).fontSize);
+      yesBtn.style.fontSize = (yesSize + 4) + "px";
+
+      const randomPhrase = frasesNo[Math.floor(Math.random() * frasesNo.length)];
+      noMessages.textContent = randomPhrase;
+    });
+
+    yesBtn.addEventListener('click', () => {
+      message.style.display = 'block';
+      noMessages.textContent = ''; // Ocultar las frases de "no"
+      lanzarCorazones();
+    });
+  </script>
+</body>
+</html>
